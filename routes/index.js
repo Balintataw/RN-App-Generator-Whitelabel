@@ -1,5 +1,7 @@
+// this file to be imported on generation if bottom tabs layout selected
 import React from 'react';
-import { createAppContainer, createSwitchNavigator, createDrawerNavigator } from 'react-navigation';
+import { Easing, Animated } from 'react-native';
+import { createAppContainer, createSwitchNavigator, createBottomTabNavigator, } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -9,16 +11,60 @@ const styles = require('../themes')('App');
 
 const appStackConfig = {}
 modules.forEach(({name, Component}) => {
-    if(name === 'Auth') {
-        // will need to take special handling with Auth module and create an authStack
-    }
     appStackConfig[name] = {
         screen: Component,
-        navigationOptions: {
-            drawerLabel: name,
-        }
+        // navigationOptions: {
+        //     header: () => null
+        // }
+
     }
 })
+
+const transitionConfig = () => {
+    return {
+        transitionSpec: {
+            duration: 750,
+            easing: Easing.out(Easing.poly(4)),
+            timing: Animated.timing,
+            useNativeDriver: true,
+        },
+        /* slide screen from right */
+        // screenInterpolator: sceneProps => {      
+        //     const { layout, position, scene } = sceneProps
+    
+        //     const thisSceneIndex = scene.index
+        //     const width = layout.initWidth
+    
+                // for right slide in transition
+        //     const translateX = position.interpolate({
+        //         inputRange: [thisSceneIndex - 1, thisSceneIndex],
+        //         outputRange: [width, 0],
+        //     })
+                // for left slide in transition
+        //     const translateX = position.interpolate({
+        //         inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
+        //         outputRange: [-width, 0],
+        //     })
+    
+        //     return { transform: [ { translateX } ] }
+        // },
+
+        /* fades screen transition */
+        screenInterpolator: sceneProps => {      
+            const { position, scene } = sceneProps;
+    
+            const thisSceneIndex = scene.index;
+    
+            const opacity = position.interpolate({
+                // takes screen index and translates it into a useable opacity value 
+                inputRange: [thisSceneIndex - 1, thisSceneIndex],
+                outputRange: [0, 1],
+            });
+    
+            return { opacity }; 
+        },
+    }
+};
 
 // const AuthStack = createSwitchNavigator(
 //     {
@@ -50,11 +96,11 @@ modules.forEach(({name, Component}) => {
 //     }
 // );
 
-const DrawerNavigator = createDrawerNavigator(
-    { ...appStackConfig },
+const TabNavigator = createBottomTabNavigator(
+    {...appStackConfig},
     {
         defaultNavigationOptions: ({ navigation }) => ({
-          drawerIcon: ({ focused, horizontal, tintColor }) => {
+          tabBarIcon: ({ focused, horizontal, tintColor }) => {
             const { routeName } = navigation.state;
             let IconComponent = Ionicons;
             let iconName;
@@ -73,8 +119,20 @@ const DrawerNavigator = createDrawerNavigator(
             return <IconComponent name={iconName} size={25} color={tintColor} />;
           },
         }),
-        initialRouteName: 'Home' || modules[0].name
+        tabBarOptions: {
+            activeTintColor: EStyleSheet.value('$primaryText'),
+            activeBackgroundColor: EStyleSheet.value('$accentColor'),
+            inactiveTintColor: EStyleSheet.value('$accentColor'),
+            inactiveBackgroundColor: EStyleSheet.value('$primaryText'),
+            showIcon: true,
+            labelStyle: {
+                fontSize: 12,
+            },
+            style: {
+                backgroundColor: 'blue',
+            },
+        },
     }
 );
   
-export default createAppContainer(DrawerNavigator);
+export default createAppContainer(TabNavigator);

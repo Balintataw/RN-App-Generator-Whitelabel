@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/Jossendal/Desktop/projects/rn_app_whitelabel/whitelabel/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v22/values-v22.xml",
+            "outputFile": "/Users/Jossendal/Desktop/projects/rn_app_whitelabel_remote/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v22/values-v22.xml",
             "map": [
                 {
                     "source": "/Users/Jossendal/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/af3f843ed923929cf0e7f2a335fc360e/res/values-v22/values-v22.xml",
