@@ -13,10 +13,6 @@ const appStackConfig = {}
 modules.forEach(({name, Component}) => {
     appStackConfig[name] = {
         screen: Component,
-        // navigationOptions: {
-        //     header: () => null
-        // }
-
     }
 })
 
@@ -128,9 +124,7 @@ const TabNavigator = createBottomTabNavigator(
             labelStyle: {
                 fontSize: 12,
             },
-            style: {
-                backgroundColor: 'blue',
-            },
+            safeAreaInset: { bottom: 'never', top: 'never' }  // <-- this is for iphoneX
         },
     }
 );
