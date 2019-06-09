@@ -1,0 +1,3 @@
+# This is the companion whitelabel app used by [RN-App-Generator](https://github.com/Balintataw/RN-App-Generator "RN-App-Generator")
+
+### Not intended to be run as a standalone app. More direction to come...
