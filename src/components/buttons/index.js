@@ -1,4 +1,4 @@
-import AppButton from './appButton';
+import AppButton from './AppButton';
 import styles from './styles';
 
 export { AppButton, styles };
